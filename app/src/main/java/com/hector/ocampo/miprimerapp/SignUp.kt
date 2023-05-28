@@ -12,7 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hector.ocampo.miprimerapp.databinding.SignUpBinding
 
-class SignUp : AppCompatActivity(){
+class SignUp : AppCompatActivity() {
     private lateinit var binding: SignUpBinding
     private lateinit var auth: FirebaseAuth
 
@@ -25,30 +25,41 @@ class SignUp : AppCompatActivity(){
         setContentView(binding.root)
 
         binding.createAccountButton.setOnClickListener {
-            auth.createUserWithEmailAndPassword(binding.emailTI.editText?.text.toString(), binding.passwordTI.editText?.text.toString())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(binding.userNameTI.editText?.text.toString())
-                            .build()
-                        user?.updateProfile(profileUpdates)
-                            ?.addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Log.d(this::class.simpleName.toString(), "User profile updated.")
-                                    NavUtils.navigateUpFromSameTask(this)
-                                }
+            auth.createUserWithEmailAndPassword(
+                binding.emailTI.editText?.text.toString(),
+                binding.passwordTI.editText?.text.toString()
+            ).addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(binding.userNameTI.editText?.text.toString())
+                        .build()
+                    user?.updateProfile(profileUpdates)
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d(
+                                    this::class.simpleName.toString(),
+                                    "User profile updated."
+                                )
+                                NavUtils.navigateUpFromSameTask(this)
                             }
-                    } else {
-                        Log.w(this::class.simpleName.toString(), "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                        }
+                } else {
+                    Log.w(
+                        this::class.simpleName.toString(),
+                        "createUserWithEmail:failure",
+                        task.exception
+                    )
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
         }
 
-        binding.LoginViewButton.setOnClickListener {
-                view -> NavUtils.navigateUpFromSameTask(this)
+        binding.LoginViewButton.setOnClickListener { view ->
+            NavUtils.navigateUpFromSameTask(this)
         }
     }
 

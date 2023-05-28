@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun changeToHome(){
+    fun changeToHome() {
         val intent = Intent(this, Home::class.java)
         startActivity(intent)
     }

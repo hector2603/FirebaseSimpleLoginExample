@@ -9,7 +9,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hector.ocampo.miprimerapp.databinding.HomeBinding
 
-class Home:AppCompatActivity() {
+class Home : AppCompatActivity() {
 
     private lateinit var binding: HomeBinding
     private lateinit var auth: FirebaseAuth
